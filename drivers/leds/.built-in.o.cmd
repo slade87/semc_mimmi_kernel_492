@@ -1,0 +1,1 @@
+cmd_drivers/leds/built-in.o :=  /home/slade/GingerDX/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-ld -EL    -r -o drivers/leds/built-in.o drivers/leds/led-core.o drivers/leds/led-class.o drivers/leds/leds-cpld.o drivers/leds/leds-lm3530.o drivers/leds/leds-msm-pmic-flash.o drivers/leds/leds-msm-pmic-misc.o 

@@ -1,0 +1,1 @@
+cmd_drivers/i2c/chips/built-in.o :=  /home/slade/GingerDX/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-ld -EL    -r -o drivers/i2c/chips/built-in.o drivers/i2c/chips/akm8973.o drivers/i2c/chips/smb380.o drivers/i2c/chips/smb380calib.o drivers/i2c/chips/bma150_driver.o 
