@@ -989,7 +989,11 @@ static int __init cy8ctma300_ser_init(void)
 	int rc;
 	
 	DBG(printk(KERN_INFO "%s: enter\n", __func__));
+
+	platform_driver_unregister((struct platform_driver *)0xc0540ff8);
+	serio_unregister_driver((struct serio_driver*)0xc0541044);
 	
+
 	rc = platform_driver_register(&cy8ctma300_pf_drv);
 	if (rc) {
 		printk(KERN_ERR "%s: Unsuccessfull pf drv reg\n", __func__);

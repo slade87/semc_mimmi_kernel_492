@@ -470,6 +470,21 @@ config TOUCHSCREEN_CY8CTMA300_SER
 	  To compile this driver as a module, choose M here: the
 	  module will be called cy8ctma300_ser.
 
+config TOUCHSCREEN_CY8CTMA300_SER_MODULE
+	default n
+	tristate "Cypress CY8CTMA300 serial touchscreen Module"
+	select SERIO
+	help
+	  This Module is for unloading initial Stock Kernel driver from
+	  SE to enable Dualtouch.
+	  Say Y here if you have a Cypress CY8CTMA300 touchscreen
+	  connected to your system's UART.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cy8ctma300_ser.
+
 config TOUCHSCREEN_CY8CTMA300_SPI
 	default n
 	depends on SPI_MASTER
