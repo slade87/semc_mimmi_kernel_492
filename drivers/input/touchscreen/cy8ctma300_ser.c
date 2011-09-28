@@ -549,9 +549,9 @@ static irqreturn_t cy8ctma300_ser_interrupt(struct serio *serio,
 					 x2 = cy8_ser->last_x2;
                                		 y2 = cy8_ser->last_y2;
 				}
-				x = cy8_ser->last_x;
+                                x = cy8_ser->last_x;
                                 y = cy8_ser->last_y;
-			}
+                        }
 			
  
                         DBG(printk(KERN_INFO"x = %u [0x%x]\n", x, x));
@@ -563,13 +563,11 @@ static irqreturn_t cy8ctma300_ser_interrupt(struct serio *serio,
                                 goto exit;
                  
 			if (finger > 0) {
-                                //input_report_abs(dev, ABS_X, x);
-                                //input_report_abs(dev, ABS_Y, y);
+                                input_report_abs(dev, ABS_X, x);
+                                input_report_abs(dev, ABS_Y, y);
                                 // dx : mt messages also
                                 input_report_abs(dev, ABS_MT_POSITION_X, x);
                                 input_report_abs(dev, ABS_MT_POSITION_Y, y);
-				input_report_abs(dev, ABS_HAT0X, x);
-                                input_report_abs(dev, ABS_HAT0Y, y);
                        
                                 input_report_abs(dev, ABS_PRESSURE, pressure);
                                 input_report_abs(dev, ABS_TOOL_WIDTH, 10);
@@ -583,7 +581,6 @@ static irqreturn_t cy8ctma300_ser_interrupt(struct serio *serio,
  
                                 // dx : for second finger
                                 if (finger >= 2) {
-					
                                         input_report_abs(dev, ABS_HAT0X, x2);
                                         input_report_abs(dev, ABS_HAT0Y, y2);
  
@@ -603,11 +600,12 @@ static irqreturn_t cy8ctma300_ser_interrupt(struct serio *serio,
                         }
                         else {
                                 input_report_key(dev, BTN_TOUCH, 0);
+                                input_mt_sync(dev);
                                 input_report_key(dev, BTN_2, 0);
                                 input_mt_sync(dev);
                         }
-                        input_mt_sync(dev);
-			input_sync(dev);
+                        input_sync(dev);
+			
 			goto exit;
                        
 		}
@@ -669,17 +667,17 @@ static int cy8ctma300_setup_input_device(struct cy8_ser *cy8_ser)
 	set_bit(EV_KEY, input_dev->evbit);
 	set_bit(EV_ABS, input_dev->evbit);
 
-	input_set_abs_params(input_dev, ABS_X, 0, cy8_ser->sysinfo.max_x,
+	input_set_abs_params(input_dev, ABS_X, 0, cy8_ser->sysinfo.max_x ,
 			     0, 0);
-	input_set_abs_params(input_dev, ABS_Y, 0, cy8_ser->sysinfo.max_y,
+	input_set_abs_params(input_dev, ABS_Y, 0, cy8_ser->sysinfo.max_y ,
 			     0, 0);
 	input_set_abs_params(input_dev, ABS_TOOL_WIDTH, 0, 64, 0, 0);
 	input_set_abs_params(input_dev, ABS_PRESSURE, 0, 128, 0, 0);
 	
 	// dx : we have mt support
-	input_set_abs_params(input_dev, ABS_MT_POSITION_X, 0, cy8_ser->sysinfo.max_x,
+	input_set_abs_params(input_dev, ABS_MT_POSITION_X, 0, cy8_ser->sysinfo.max_x ,
 			     0, 0);
-	input_set_abs_params(input_dev, ABS_MT_POSITION_Y, 0, cy8_ser->sysinfo.max_y,
+	input_set_abs_params(input_dev, ABS_MT_POSITION_Y, 0, cy8_ser->sysinfo.max_y ,
 			     0, 0);
 	input_set_abs_params(input_dev, ABS_MT_TOUCH_MAJOR, 0, 32, 0, 0);
 	input_set_abs_params(input_dev, ABS_MT_WIDTH_MAJOR, 0, 32, 0, 0);
